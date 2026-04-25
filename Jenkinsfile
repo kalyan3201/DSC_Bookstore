@@ -5,7 +5,7 @@ pipeline {
         DOCKER_IMAGE = "kondavenkat035/dsc_bookstore"
         TAG = "${BUILD_NUMBER}"
         SONARQUBE_ENV = 'sonarqube'
-        AWS_DEFAULT_REGION = "us-east-1"
+        AWS_DEFAULT_REGION = "ap-east-1"
         KUBECONFIG = "/var/lib/jenkins/.kube/config"
     }
 
@@ -16,7 +16,7 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/Kondavenkat035/DSC_Bookstore.git'
             }
         }
-        stage('Inntall') {
+        stage('Install') {
             steps {
                 sh 'mvn clean package'
             }
