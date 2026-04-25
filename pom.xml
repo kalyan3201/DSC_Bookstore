@@ -100,6 +100,4 @@
 
     </distributionManagement>
 
-</project>
-
-use this pom.xml and add nexus line obsure above line issue 
+</project> 
