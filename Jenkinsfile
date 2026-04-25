@@ -34,6 +34,21 @@ pipeline {
             }
         }
 
+        // ✅ ADD THIS STAGE (VERY IMPORTANT)
+        stage('Get Version') {
+            steps {
+                dir('bookstore') {
+                    script {
+                        env.VERSION = sh(
+                            script: "mvn help:evaluate -Dexpression=project.version -q -DforceStdout",
+                            returnStdout: true
+                        ).trim()
+                    }
+                }
+            }
+        }
+
+        // ✅ FIXED NEXUS STAGE
         stage('Upload to Nexus') {
             steps {
                 dir('bookstore') {
@@ -42,13 +57,13 @@ pipeline {
                         usernameVariable: 'NEXUS_USER',
                         passwordVariable: 'NEXUS_PASS'
                     )]) {
-                        sh """
-                        JAR_FILE=\$(ls target/*.jar | head -n 1)
+                        sh '''
+                        FILE=$(ls target/*.war | head -n 1)
 
                         curl -u $NEXUS_USER:$NEXUS_PASS \
-                        --upload-file \$JAR_FILE \
-                        ${NEXUS_URL}/repository/${NEXUS_REPO}/${GROUP_ID}/${ARTIFACT_ID}/${VERSION}/${ARTIFACT_ID}-${VERSION}.war
-                        """
+                        --upload-file $FILE \
+                        $NEXUS_URL/repository/maven-releases/com/bookstore/bookstore/${VERSION}/bookstore-${VERSION}.war
+                        '''
                     }
                 }
             }
