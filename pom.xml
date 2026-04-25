@@ -5,29 +5,23 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <!-- ===================== PROJECT INFO ===================== -->
     <groupId>com.example.bookstore</groupId>
     <artifactId>bookstore</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
-    <!-- ===================== PROPERTIES ===================== -->
+    <!-- ✅ Java Version -->
     <properties>
-        <java.version>1.8</java.version>
-
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
 
-        <!-- SonarQube -->
+        <!-- ✅ Sonar Config -->
         <sonar.projectKey>bookstore</sonar.projectKey>
-        <sonar.projectName>bookstore</sonar.projectName>
-        <sonar.sources>src/main</sonar.sources>
+        <sonar.sources>bookstore/src/main/webapp</sonar.sources>
     </properties>
 
-    <!-- ===================== DEPENDENCIES ===================== -->
+    <!-- ✅ Dependencies -->
     <dependencies>
-
-        <!-- Servlet API -->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
@@ -35,47 +29,53 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- JSP API -->
         <dependency>
             <groupId>javax.servlet.jsp</groupId>
             <artifactId>javax.servlet.jsp-api</artifactId>
             <version>2.3.3</version>
             <scope>provided</scope>
         </dependency>
-
     </dependencies>
 
-    <!-- ===================== BUILD ===================== -->
+    <!-- ✅ Build Configuration -->
     <build>
+
+        <!-- 🔥 Tell Maven where your webapp is -->
+        <directory>${project.basedir}/target</directory>
+
+        <resources>
+            <resource>
+                <directory>bookstore/src/main/webapp</directory>
+            </resource>
+        </resources>
 
         <plugins>
 
-            <!-- Compiler Plugin -->
+            <!-- ✅ Compiler Plugin -->
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.11.0</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
             </plugin>
 
-            <!-- WAR Plugin -->
+            <!-- ✅ WAR Plugin (IMPORTANT FIX) -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>3.3.2</version>
+                <configuration>
+                    <!-- 🔥 FIX: point to correct folder -->
+                    <warSourceDirectory>bookstore/src/main/webapp</warSourceDirectory>
+                </configuration>
             </plugin>
 
-            <!-- Sonar Plugin -->
+            <!-- ✅ Sonar Plugin -->
             <plugin>
                 <groupId>org.sonarsource.scanner.maven</groupId>
                 <artifactId>sonar-maven-plugin</artifactId>
                 <version>4.0.0.4121</version>
             </plugin>
 
-            <!-- Deploy Plugin -->
+            <!-- ✅ Deploy Plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-deploy-plugin</artifactId>
@@ -83,22 +83,19 @@
             </plugin>
 
         </plugins>
-
     </build>
 
-    <!-- ===================== NEXUS REPOSITORY ===================== -->
+    <!-- ✅ Nexus Configuration -->
     <distributionManagement>
 
-        <!-- Releases -->
         <repository>
             <id>nexus-releases</id>
-            <url>http://localhost:8081/repository/maven-releases/</url>
+            <url>http://13.201.94.125:8081/repository/maven-releases/</url>
         </repository>
 
-        <!-- Snapshots -->
         <snapshotRepository>
             <id>nexus-snapshots</id>
-            <url>http://localhost:8081/repository/maven-snapshots/</url>
+            <url>http://13.201.94.125:8081/repository/maven-snapshots/</url>
         </snapshotRepository>
 
     </distributionManagement>
