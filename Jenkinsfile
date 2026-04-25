@@ -4,6 +4,7 @@ pipeline {
     environment {
         DOCKER_IMAGE = "kondavenkat035/dsc_bookstore"
         TAG = "${BUILD_NUMBER}"
+        SONARQUBE_ENV = 'sonarqube'
     }
 
     stages {
@@ -16,6 +17,21 @@ pipeline {
         stage('Inntall') {
             steps {
                 sh 'mvn clean package'
+            }
+        }
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv("${SONARQUBE_ENV}") {
+                    sh 'mvn sonar:sonar'
+                }
+            }
+        }
+
+        stage('Quality Gate') {
+            steps {
+                timeout(time: 1, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: true
+                }
             }
         }
 
