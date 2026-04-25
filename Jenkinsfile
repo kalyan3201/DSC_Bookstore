@@ -12,6 +12,10 @@ pipeline {
         HOST_PORT    = "8082"
         CONTAINER_PORT = "8080"
 
+        NEXUS_URL = "http://13.201.94.125:8081"
+        NEXUS_REPO = "maven-releases"
+        GROUP_ID = "com/bookstore"
+        ARTIFACT_ID = "bookstore"
     }
 
     stages {
@@ -39,7 +43,7 @@ pipeline {
                         passwordVariable: 'NEXUS_PASS'
                     )]) {
                         sh """
-                        JAR_FILE=\$(ls target/*.war | head -n 1)
+                        JAR_FILE=\$(ls target/*.jar | head -n 1)
 
                         curl -u $NEXUS_USER:$NEXUS_PASS \
                         --upload-file \$JAR_FILE \
