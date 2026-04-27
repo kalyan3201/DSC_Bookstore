@@ -5,7 +5,6 @@ pipeline {
         DOCKER_IMAGE = "kondavenkat035/dsc_bookstore"
         TAG = "${BUILD_NUMBER}"
         SONARQUBE_ENV = 'sonarqube'
-        AWS_DEFAULT_REGION = "ap-south-1"
     }
 
     stages {
