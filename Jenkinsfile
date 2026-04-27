@@ -6,6 +6,7 @@ pipeline {
         TAG = "${BUILD_NUMBER}"
         SONARQUBE_ENV = 'sonarqube'
         AWS_DEFAULT_REGION = "ap-south-1"
+        KUBECONFIG = "/var/lib/jenkins/.kube/config"
     }
 
     stages {
@@ -80,8 +81,8 @@ pipeline {
             steps {
                 withCredentials([file(credentialsId: 'k8s-kubeconfig', variable: 'KUBECONFIG')]) {
                     sh '''
-                        export KUBECONFIG=$WORKSPACE/kubeconfig
-                        aws eks update-kubeconfig --region ap-south-1 --name new-cluster
+                
+                        aws eks update-kubeconfig --region ap-south-1 --name new-cluster --kubeconfig $(KUBECONFIG)
                         kubectl get nodes
 
                         echo "Deploying to EKS..."
@@ -101,7 +102,6 @@ pipeline {
             steps {
                 withCredentials([file(credentialsId: 'k8s-kubeconfig', variable: 'KUBECONFIG')]) {
                     sh '''
-                        export KUBECONFIG=$KUBECONFIG
 
                         echo "Fetching LoadBalancer URL..."
 
