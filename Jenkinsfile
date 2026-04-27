@@ -6,7 +6,6 @@ pipeline {
         TAG = "${BUILD_NUMBER}"
         SONARQUBE_ENV = 'sonarqube'
         AWS_DEFAULT_REGION = "ap-south-1"
-        KUBECONFIG = "/var/lib/jenkins/.kube/config"
     }
 
     stages {
