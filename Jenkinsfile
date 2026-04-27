@@ -81,6 +81,8 @@ pipeline {
                 withCredentials([file(credentialsId: 'k8s-kubeconfig', variable: 'KUBECONFIG')]) {
                     sh '''
                         export KUBECONFIG=$KUBECONFIG
+                        aws eks update-kubeconfig --region ap-south-1 --name new-cluster
+                        /usr/local/bin/kubectl config current-context
 
                         echo "Deploying to EKS..."
 
