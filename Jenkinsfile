@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = "kondavenkat035/dsc_bookstore"
+        DOCKER_IMAGE = "pavansaikalyan/dsc_bookstore"
         TAG = "${BUILD_NUMBER}"
         SONARQUBE_ENV = 'sonarqube'
     }
@@ -11,7 +11,7 @@ pipeline {
 
         stage('Checkout Code') {
             steps {
-                git branch: 'main', url: 'https://github.com/Kondavenkat035/DSC_Bookstore.git'
+                git branch: 'main', url: 'https://github.com/kalyan3201/DSC_Bookstore.git'
             }
         }
 
