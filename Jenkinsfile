@@ -4,7 +4,7 @@ pipeline {
     environment {
         DOCKER_IMAGE = "pavansaikalyan/dsc_bookstore"
         TAG = "${BUILD_NUMBER}"
-        SONARQUBE_ENV = 'sonarqube'
+        SONARQUBE_ENV = 'sonar-server'
     }
 
     stages {
